@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SvgPicture.asset(
-                      'assets/logos/SM_2022.svg',
+                      'assets/logos/app/SM_2022.svg',
                       width: logoSize,
                       height: logoSize,
                     ),

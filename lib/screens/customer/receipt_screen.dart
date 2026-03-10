@@ -64,7 +64,7 @@ class ReceiptScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(
-                                    'assets/logos/SM_2022.svg',
+                                    'assets/logos/app/SM_2022.svg',
                                     width: 22,
                                     height: 22,
                                   ),

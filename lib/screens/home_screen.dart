@@ -532,7 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: [
             SvgPicture.asset(
-              'assets/logos/SM_2022.svg',
+              'assets/logos/app/SM_2022.svg',
               width: 44,
               height: 44,
             ),

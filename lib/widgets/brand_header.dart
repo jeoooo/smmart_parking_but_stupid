@@ -34,7 +34,7 @@ class BrandHeader extends StatelessWidget {
               children: [
                 // SM logo — white silhouette on gradient background
                 SvgPicture.asset(
-                  'assets/logos/SM_2022.svg',
+                  'assets/logos/app/SM_2022.svg',
                   width: compact ? 28 : 36,
                   height: compact ? 28 : 36,
                 ),
