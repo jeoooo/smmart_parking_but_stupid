@@ -60,11 +60,8 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
     final isUrgent = _remainingSeconds <= 60;
 
     return Scaffold(
-      body: Column(
-        children: [
-          const BrandHeader(compact: true),
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: const BrandHeader(compact: true),
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
@@ -220,9 +217,6 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }

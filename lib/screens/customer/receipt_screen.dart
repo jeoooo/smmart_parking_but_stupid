@@ -25,11 +25,8 @@ class ReceiptScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: context.colBackground,
-      body: Column(
-        children: [
-          const BrandHeader(compact: true),
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: const BrandHeader(compact: true),
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
@@ -297,9 +294,6 @@ class ReceiptScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }

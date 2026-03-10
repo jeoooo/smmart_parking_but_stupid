@@ -12,11 +12,8 @@ class EntryScreen extends StatelessWidget {
     final session = SessionManager.current!;
 
     return Scaffold(
-      body: Column(
-        children: [
-          const BrandHeader(compact: true),
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: const BrandHeader(compact: true),
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
@@ -99,9 +96,6 @@ class EntryScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }

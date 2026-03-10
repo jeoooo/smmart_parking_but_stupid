@@ -39,11 +39,8 @@ class _SessionScreenState extends State<SessionScreen> {
     final seconds = (dur.inSeconds % 60).toString().padLeft(2, '0');
 
     return Scaffold(
-      body: Column(
-        children: [
-          const BrandHeader(compact: true),
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: const BrandHeader(compact: true),
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
@@ -209,9 +206,6 @@ class _SessionScreenState extends State<SessionScreen> {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }

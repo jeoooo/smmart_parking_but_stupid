@@ -36,11 +36,8 @@ class _PaymentFormScreenState extends State<PaymentFormScreen> {
     final session = SessionManager.current!;
 
     return Scaffold(
-      body: Column(
-        children: [
-          const BrandHeader(compact: true),
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: const BrandHeader(compact: true),
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Form(
                 key: _formKey,
@@ -120,9 +117,6 @@ class _PaymentFormScreenState extends State<PaymentFormScreen> {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 

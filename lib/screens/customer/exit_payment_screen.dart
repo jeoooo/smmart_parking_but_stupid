@@ -18,11 +18,8 @@ class ExitPaymentScreen extends StatelessWidget {
     final additionalFee = additionalHours * ParkingRate.hourlyRate;
 
     return Scaffold(
-      body: Column(
-        children: [
-          const BrandHeader(compact: true),
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: const BrandHeader(compact: true),
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
@@ -137,9 +134,6 @@ class ExitPaymentScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }
