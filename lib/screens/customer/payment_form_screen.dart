@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../models.dart';
 import '../../theme.dart';
 import '../../widgets.dart';
@@ -115,16 +114,6 @@ class _PaymentFormScreenState extends State<PaymentFormScreen> {
                       ),
                       child: Text(
                           'Pay ${ParkingRate.format(session.fee)}'),
-                    ),
-                    const SizedBox(height: 12),
-                    Center(
-                      child: TextButton.icon(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(LucideIcons.arrowLeft, size: 16),
-                        label: const Text('Back to payment options'),
-                        style: TextButton.styleFrom(
-                            foregroundColor: AppColors.textSecondary),
-                      ),
                     ),
                     const SizedBox(height: 32),
                   ],

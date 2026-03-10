@@ -115,7 +115,7 @@ class WalletForm extends StatelessWidget {
           keyboardType: TextInputType.phone,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(11),
+            _PhoneFormatter(),
           ],
           decoration: InputDecoration(
             hintText: '09XX XXX XXXX',
@@ -126,9 +126,10 @@ class WalletForm extends StatelessWidget {
             fillColor: context.colSurface,
           ),
           validator: (v) {
-            if (v == null || v.isEmpty) return 'Enter your $label number';
-            if (v.length != 11 || !v.startsWith('09')) {
-              return 'Enter a valid PH mobile number (09XXXXXXXXX)';
+            final digits = v?.replaceAll(' ', '') ?? '';
+            if (digits.isEmpty) return 'Enter your $label number';
+            if (digits.length != 11 || !digits.startsWith('09')) {
+              return 'Enter a valid PH mobile number (09XX XXX XXXX)';
             }
             return null;
           },
@@ -322,6 +323,24 @@ class CardForm extends StatelessWidget {
 // ---------------------------------------------------------------------------
 // Input formatters (private helpers)
 // ---------------------------------------------------------------------------
+
+// Formats 11-digit PH mobile numbers as: 09XX XXX XXXX
+class _PhoneFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue old, TextEditingValue next) {
+    final digits = next.text.replaceAll(' ', '');
+    if (digits.length > 11) return old;
+    final buf = StringBuffer();
+    for (int i = 0; i < digits.length; i++) {
+      if (i == 4 || i == 7) buf.write(' ');
+      buf.write(digits[i]);
+    }
+    final str = buf.toString();
+    return next.copyWith(
+        text: str, selection: TextSelection.collapsed(offset: str.length));
+  }
+}
 
 class _CardNumberFormatter extends TextInputFormatter {
   @override
