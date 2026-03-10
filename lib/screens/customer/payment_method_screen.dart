@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../models.dart';
 import '../../theme.dart';
 import '../../widgets.dart';
@@ -46,28 +45,50 @@ class PaymentMethodScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
                   PaymentOption(
-                    icon: LucideIcons.wallet,
+                    logo: Image.asset(
+                      'assets/logos/payments/gcash.png',
+                      width: 32,
+                      height: 32,
+                      fit: BoxFit.contain,
+                    ),
                     name: 'GCash',
                     description: 'Pay with your GCash wallet',
-                    color: AppColors.gcash,
+                    bgColor: AppColors.gcash.withValues(alpha: 0.12),
                     onTap: () => Navigator.pushNamed(context, '/payment-form',
                         arguments: PaymentMethod.gcash),
                   ),
                   const SizedBox(height: 12),
                   PaymentOption(
-                    icon: LucideIcons.wallet,
+                    logo: Image.asset(
+                      'assets/logos/payments/maya.png',
+                      width: 32,
+                      height: 32,
+                      fit: BoxFit.contain,
+                    ),
                     name: 'Maya',
                     description: 'Pay with your Maya wallet',
-                    color: AppColors.maya,
+                    bgColor: const Color.fromARGB(255, 0, 0, 0),
                     onTap: () => Navigator.pushNamed(context, '/payment-form',
                         arguments: PaymentMethod.maya),
                   ),
                   const SizedBox(height: 12),
                   PaymentOption(
-                    icon: LucideIcons.creditCard,
+                    logo: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset('assets/logos/payments/visa.png',
+                            height: 20, fit: BoxFit.contain),
+                        const SizedBox(width: 6),
+                        Image.asset('assets/logos/payments/mastercard.png',
+                            height: 20, fit: BoxFit.contain),
+                        const SizedBox(width: 6),
+                        Image.asset('assets/logos/payments/jcb.png',
+                            height: 20, fit: BoxFit.contain),
+                      ],
+                    ),
                     name: 'Credit / Debit Card',
                     description: 'Visa, Mastercard, JCB',
-                    color: AppColors.card,
+                    bgColor: AppColors.card.withValues(alpha: 0.08),
                     onTap: () => Navigator.pushNamed(context, '/payment-form',
                         arguments: PaymentMethod.card),
                   ),

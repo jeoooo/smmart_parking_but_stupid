@@ -9,5 +9,5 @@ export 'gate_card.dart' show GateCard;
 export 'step_item.dart' show StepItem;
 export 'rate_card.dart' show RateCard;
 export 'payment_option.dart' show PaymentOption;
-export 'payment_form_widgets.dart' show MethodBadge, WalletForm, CardForm;
+export 'payment_form_widgets.dart' show PaymentLogo, MethodBadge, WalletForm, CardForm;
 export 'detail_row.dart' show DetailRow;

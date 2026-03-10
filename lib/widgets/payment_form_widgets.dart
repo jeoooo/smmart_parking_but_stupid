@@ -5,6 +5,48 @@ import '../theme.dart';
 import '../models.dart';
 
 // ---------------------------------------------------------------------------
+// Payment Logo — brand image for a given payment method
+// ---------------------------------------------------------------------------
+
+class PaymentLogo extends StatelessWidget {
+  final PaymentMethod method;
+  final double size;
+
+  const PaymentLogo({super.key, required this.method, this.size = 24});
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (method) {
+      PaymentMethod.gcash => Image.asset(
+          'assets/logos/payments/gcash.png',
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+        ),
+      PaymentMethod.maya => Image.asset(
+          'assets/logos/payments/maya.png',
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+        ),
+      PaymentMethod.card => Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/logos/payments/visa.png',
+                height: size * 0.7, fit: BoxFit.contain),
+            SizedBox(width: size * 0.2),
+            Image.asset('assets/logos/payments/mastercard.png',
+                height: size * 0.7, fit: BoxFit.contain),
+            SizedBox(width: size * 0.2),
+            Image.asset('assets/logos/payments/jcb.png',
+                height: size * 0.7, fit: BoxFit.contain),
+          ],
+        ),
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Method Badge — branded header bar for the selected payment method
 // ---------------------------------------------------------------------------
 
@@ -24,11 +66,6 @@ class MethodBadge extends StatelessWidget {
       PaymentMethod.maya => 'Pay with Maya',
       PaymentMethod.card => 'Credit / Debit Card',
     };
-    final icon = switch (method) {
-      PaymentMethod.gcash => LucideIcons.wallet,
-      PaymentMethod.maya => LucideIcons.wallet,
-      PaymentMethod.card => LucideIcons.creditCard,
-    };
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -39,7 +76,7 @@ class MethodBadge extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 22),
+          PaymentLogo(method: method, size: 22),
           const SizedBox(width: 10),
           Text(
             label,
@@ -266,14 +303,15 @@ class CardForm extends StatelessWidget {
           children: [
             const Icon(LucideIcons.shieldCheck,
                 size: 13, color: AppColors.success),
+            const SizedBox(width: 8),
+            Image.asset('assets/logos/payments/visa.png',
+                height: 16, fit: BoxFit.contain),
             const SizedBox(width: 6),
-            Text(
-              'Visa · Mastercard · JCB',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall
-                  ?.copyWith(color: AppColors.success),
-            ),
+            Image.asset('assets/logos/payments/mastercard.png',
+                height: 16, fit: BoxFit.contain),
+            const SizedBox(width: 6),
+            Image.asset('assets/logos/payments/jcb.png',
+                height: 16, fit: BoxFit.contain),
           ],
         ),
       ],

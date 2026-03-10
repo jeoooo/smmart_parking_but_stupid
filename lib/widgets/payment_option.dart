@@ -7,18 +7,18 @@ import '../theme.dart';
 // ---------------------------------------------------------------------------
 
 class PaymentOption extends StatelessWidget {
-  final IconData icon;
+  final Widget logo;
   final String name;
   final String description;
-  final Color color;
+  final Color bgColor;
   final VoidCallback onTap;
 
   const PaymentOption({
     super.key,
-    required this.icon,
+    required this.logo,
     required this.name,
     required this.description,
-    required this.color,
+    required this.bgColor,
     required this.onTap,
   });
 
@@ -40,12 +40,12 @@ class PaymentOption extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
+                  color: bgColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, color: color, size: 28),
+                child: logo,
               ),
               const SizedBox(width: 16),
               Expanded(

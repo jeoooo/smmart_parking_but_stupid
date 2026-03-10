@@ -30,6 +30,8 @@ flutter:
 
   assets:
     - assets/logos/
+    - assets/logos/app/
+    - assets/logos/payments/
 
   fonts:
     - family: HenrySans

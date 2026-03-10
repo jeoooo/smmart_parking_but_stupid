@@ -445,7 +445,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(session.formattedDuration,
                     style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(width: 14),
-                Icon(LucideIcons.creditCard, size: 13, color: methodColor),
+                if (session.paymentMethod != null)
+                  PaymentLogo(method: session.paymentMethod!, size: 16),
                 const SizedBox(width: 4),
                 Text(
                   methodLabel,
