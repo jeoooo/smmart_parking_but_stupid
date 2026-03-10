@@ -8,12 +8,7 @@ import '../widgets.dart';
 import 'customer/session_screen.dart';
 import 'customer/receipt_screen.dart';
 
-// Mock availability data
-const _gates = [
-  (label: 'Gate A · Main Entrance', available: 124, total: 200),
-  (label: 'Gate B · North Wing', available: 87, total: 150),
-  (label: 'Gate C · Food Court', available: 0, total: 80),
-];
+// Gate availability is loaded from BranchManager.current.gates
 
 final _steps = [
   (
@@ -46,7 +41,8 @@ final _mockHistory = <ParkingSession>[
   ParkingSession(
     sessionId: 'SP-20260308-4521',
     plateNumber: 'DAV 2026',
-    entryGate: 'Gate A \u2014 Main Entrance',
+    entryGate: 'Gate A · Main Entrance',
+    branchName: 'SM City Davao',
     entryTime: DateTime(2026, 3, 8, 10, 15),
     exitTime: DateTime(2026, 3, 8, 13, 42),
     status: SessionStatus.paid,
@@ -57,7 +53,8 @@ final _mockHistory = <ParkingSession>[
   ParkingSession(
     sessionId: 'SP-20260301-2089',
     plateNumber: 'DAV 2026',
-    entryGate: 'Gate B \u2014 North Wing',
+    entryGate: 'Gate 1 · Main Entrance',
+    branchName: 'SM Lanang Premier',
     entryTime: DateTime(2026, 3, 1, 14, 30),
     exitTime: DateTime(2026, 3, 1, 16, 5),
     status: SessionStatus.paid,
@@ -68,7 +65,8 @@ final _mockHistory = <ParkingSession>[
   ParkingSession(
     sessionId: 'SP-20260218-7734',
     plateNumber: 'DAV 2026',
-    entryGate: 'Gate A \u2014 Main Entrance',
+    entryGate: 'Gate A · Main Entrance',
+    branchName: 'SM City Davao',
     entryTime: DateTime(2026, 2, 18, 9, 0),
     exitTime: DateTime(2026, 2, 18, 11, 30),
     status: SessionStatus.paid,
@@ -88,6 +86,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
+  List<GateData> get _gates => BranchManager.current.gates;
   int get _totalAvailable => _gates.fold(0, (s, g) => s + g.available);
   int get _totalSpaces => _gates.fold(0, (s, g) => s + g.total);
   int get _totalOccupied => _totalSpaces - _totalAvailable;
@@ -431,7 +430,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              session.entryGate,
+              '${session.branchName} · ${session.entryGate}',
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
@@ -550,13 +549,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     letterSpacing: -0.3,
                   ),
                 ),
-                Text(
-                  'SM City Davao',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.75),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'HenrySans',
+                GestureDetector(
+                  onTap: () => _showBranchPicker(context),
+                  child: Row(
+                    children: [
+                      Text(
+                        BranchManager.current.name,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.75),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'HenrySans',
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(
+                        LucideIcons.chevronsUpDown,
+                        size: 11,
+                        color: Colors.white.withValues(alpha: 0.6),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -592,6 +604,59 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showBranchPicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.textSecondary.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Select Branch',
+                style: Theme.of(ctx).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ...BranchManager.branches.map((b) => ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  title: Text(b.name,
+                      style: const TextStyle(fontWeight: FontWeight.w500)),
+                  subtitle: Text('${b.gates.length} gates'),
+                  trailing: b == BranchManager.current
+                      ? const Icon(LucideIcons.circleCheck,
+                          color: AppColors.primary)
+                      : null,
+                  onTap: () {
+                    BranchManager.select(b);
+                    setState(() {});
+                    Navigator.pop(ctx);
+                  },
+                )),
+            const SizedBox(height: 16),
           ],
         ),
       ),

@@ -83,7 +83,7 @@ class ReceiptScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'SM City Davao',
+                                session.branchName,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -261,7 +261,7 @@ class ReceiptScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 16),
                               Text(
-                                'Thank you for parking at\nSM City Davao!',
+                                'Thank you for parking at\n${session.branchName}!',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme

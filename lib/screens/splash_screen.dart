@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../models.dart';
 import '../theme.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -75,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'SM City Davao',
+                      BranchManager.current.name,
                       style: TextStyle(
                         fontFamily: 'HenrySans',
                         fontSize: 14,

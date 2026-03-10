@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../models.dart';
 import '../theme.dart';
 
 // ---------------------------------------------------------------------------
@@ -55,7 +56,7 @@ class BrandHeader extends StatelessWidget {
                     ),
                     if (!compact)
                       Text(
-                        'SM City Davao',
+                        BranchManager.current.name,
                         style: TextStyle(
                           // Regular weight for the subtitle
                           color: Colors.white.withValues(alpha: 0.75),

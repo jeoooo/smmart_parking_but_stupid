@@ -4,6 +4,51 @@ enum SessionStatus { active, pendingPayment, paid, exited }
 
 enum PaymentStatus { pending, processing, completed, failed }
 
+// ── Branch / Gate data ────────────────────────────────────────────────────────
+
+typedef GateData = ({String label, int available, int total});
+
+class SmBranch {
+  final String id;
+  final String name;
+  final List<GateData> gates;
+
+  const SmBranch({
+    required this.id,
+    required this.name,
+    required this.gates,
+  });
+}
+
+class BranchManager {
+  static final List<SmBranch> branches = [
+    SmBranch(
+      id: 'smcd',
+      name: 'SM City Davao',
+      gates: [
+        (label: 'Gate A · Main Entrance', available: 124, total: 200),
+        (label: 'Gate B · North Wing', available: 87, total: 150),
+        (label: 'Gate C · Food Court', available: 0, total: 80),
+      ],
+    ),
+    SmBranch(
+      id: 'smlp',
+      name: 'SM Lanang Premier',
+      gates: [
+        (label: 'Gate 1 · Main Entrance', available: 98, total: 180),
+        (label: 'Gate 2 · Upper Ground', available: 45, total: 120),
+        (label: 'Gate 3 · Seaside Wing', available: 12, total: 90),
+      ],
+    ),
+  ];
+
+  static SmBranch current = branches.first;
+
+  static void select(SmBranch branch) => current = branch;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 class ParkingRate {
   static const double baseRate = 40.0;
   static const int baseHours = 3;
@@ -24,6 +69,7 @@ class ParkingSession {
   String sessionId;
   String? plateNumber;
   String entryGate;
+  String branchName;
   DateTime entryTime;
   DateTime? exitTime;
   SessionStatus status;
@@ -35,13 +81,14 @@ class ParkingSession {
     required this.sessionId,
     this.plateNumber,
     required this.entryGate,
+    String? branchName,
     required this.entryTime,
     this.exitTime,
     this.status = SessionStatus.active,
     this.paymentStatus = PaymentStatus.pending,
     this.paymentMethod,
     this.transactionId,
-  });
+  }) : branchName = branchName ?? BranchManager.current.name;
 
   Duration get duration => (exitTime ?? DateTime.now()).difference(entryTime);
   double get fee => ParkingRate.compute(duration);
@@ -73,11 +120,13 @@ class SessionManager {
   static ParkingSession? current;
 
   static void startSession() {
+    final branch = BranchManager.current;
     current = ParkingSession(
       sessionId:
           'SP-20260310-${(DateTime.now().millisecondsSinceEpoch % 10000).toString().padLeft(4, '0')}',
       plateNumber: 'DAV 2026',
-      entryGate: 'Gate A \u2014 Main Entrance',
+      entryGate: branch.gates.first.label,
+      branchName: branch.name,
       entryTime: DateTime.now().subtract(const Duration(hours: 2, minutes: 34)),
     );
   }
